@@ -1427,7 +1427,7 @@
     (let (avs)
       (setq avs
             (list
-              (send *baxter* :approach-from-downside arm)
+              (send *baxter* :midpose-hold-opposite-hand-object-downside arm)
               (send *baxter* arm :inverse-kinematics
                     (send *baxter* :get-support-arm-coords (send self :opposite-arm arm)
                           :dz (- (+ distance 100)))

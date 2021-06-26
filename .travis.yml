@@ -26,6 +26,7 @@ env:
     # XXX: hotfix for chainer problem (https://github.com/chainer/chainer/issues/8545)
     - BEFORE_SCRIPT='sudo -H pip install chainer==6.7.0 gdown==3.10.1'
   matrix:
+    - CHECK_PYTHON3_COMPILE=true
     - ROS_DISTRO=indigo
     - ROS_DISTRO=indigo BUILD_PKGS="jsk_apc2015_common jsk_apc2016_common jsk_arc2017_common jsk_2015_05_baxter_apc jsk_2016_01_baxter_apc jsk_arc2017_baxter selective_dualarm_stowing sphand_driver sphand_driver_msgs vl53l0x_mraa_ros baxtergv6_apc2016"
     - ROS_DISTRO=kinetic
@@ -34,6 +35,7 @@ matrix:
   allow_failures:
     - env: ROS_DISTRO=indigo
 script:
+  - if [ "${CHECK_PYTHON3_COMPILE}" == "true" ]; then python3 -m compileall .; exit $?; fi
   - export DOCKER_IMAGE="jskrobotics/jsk_apc:${ROS_DISTRO}-latest-testing"
   # build & test ROS packages
   - source .travis/travis.sh
